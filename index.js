@@ -20,7 +20,7 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: CLIENT_ORIGIN
+    origin: CLIENT_ORIGIN,
   })
 );
 
@@ -59,7 +59,7 @@ app.post('/api/cheeses', (req, res) =>{
   cheeses = [...cheeses, newCheese];
 
   console.log(cheeses);
-  res.location(`http://${req.headers.host}/api/${newCheese}`).status(201).json({cheeses});
+  res.status(201).json({cheeses});
 });
 
 function runServer(port = PORT) {
