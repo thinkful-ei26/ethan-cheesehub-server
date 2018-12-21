@@ -16,32 +16,50 @@ app.use(
   })
 );
 
+app.use(express.json());
+
 app.use(
   cors({
     origin: CLIENT_ORIGIN
   })
 );
 
+let cheeses = [
+  'Bath Blue',
+  'Barkham Blue',
+  'Buxton Blue',
+  'Cheshire Blue',
+  'Devon Blue',
+  'Dorset Blue Vinney',
+  'Dovedale',
+  'Exmoor Blue',
+  'Harbourne Blue',
+  'Lanark Blue',
+  'Lymeswold',
+  'Oxford Blue',
+  'Shropshire Blue',
+  'Stichelton',
+  'Stilton',
+  'Blue Wensleydale',
+  'Yorkshire Blue'
+];
+
 app.get('/api/cheeses', (req, res) => {
-  res.json({cheeses: [
-    'Bath Blue',
-    'Barkham Blue',
-    'Buxton Blue',
-    'Cheshire Blue',
-    'Devon Blue',
-    'Dorset Blue Vinney',
-    'Dovedale',
-    'Exmoor Blue',
-    'Harbourne Blue',
-    'Lanark Blue',
-    'Lymeswold',
-    'Oxford Blue',
-    'Shropshire Blue',
-    'Stichelton',
-    'Stilton',
-    'Blue Wensleydale',
-    'Yorkshire Blue'
-  ]});
+  res.json({cheeses});
+});
+
+app.post('/api/cheeses', (req, res) =>{
+  
+  console.log(req.body);
+
+  // const name = req.body.name;
+
+  const newCheese = req.body.name;
+
+  cheeses = [...cheeses, newCheese];
+
+  console.log(cheeses);
+  res.location(`http://${req.headers.host}/api/${newCheese}`).status(201).json({cheeses});
 });
 
 function runServer(port = PORT) {
